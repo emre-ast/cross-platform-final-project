@@ -2,13 +2,7 @@
 import React from 'react';
 import {ParamListBase} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {
-  ScrollView,
-  StyleSheet,
-  Touchable,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Text, useTheme} from 'react-native-paper';
 import AntIcons from 'react-native-vector-icons/AntDesign';
 
@@ -27,9 +21,10 @@ export type ProductType = {
 
 export function ProductScreen({
   navigation,
-}: NativeStackScreenProps<ParamListBase, 'ProductsList'>) {
+}: NativeStackScreenProps<ParamListBase, 'ProductList'>) {
   const theme = useTheme();
   const [products, setProducts] = React.useState<ProductType[]>([]);
+  const [forceRefresh, setForceRefresh] = React.useState(false);
 
   const style = StyleSheet.create({
     row: {
@@ -56,11 +51,11 @@ export function ProductScreen({
     };
 
     getProducts();
-  }, []);
+  }, [forceRefresh]);
 
   return (
     <ScrollView>
-      <Text variant="titleLarge">Product Screen</Text>
+      <Text variant="titleLarge">Products</Text>
 
       <View style={style.row}>
         <View style={{flex: 4}}>
@@ -109,7 +104,9 @@ export function ProductScreen({
           <View style={{flex: 1}}>
             <AntIcons
               onPress={_e => {
-                console.log(id);
+                fetch(`https://northwind.vercel.app/api/products/${id}`, {
+                  method: 'DELETE',
+                }).then(() => setForceRefresh(prev => !prev));
               }}
               name="delete"
               size={20}

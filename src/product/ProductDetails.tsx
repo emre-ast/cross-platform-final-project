@@ -31,8 +31,6 @@ export function ProductDetailScreen({
     getProduct();
   }, [productId]);
 
-  console.log(product);
-
   return (
     <ScrollView
       contentContainerStyle={{
