@@ -15,18 +15,9 @@ import {ProductScreen} from './src/product/ProductsScreen';
 import {ProductDetailScreen} from './src/product/ProductDetails';
 import {CategoryScreen} from './src/category/CategoriesScreen';
 import {CategoryDetailScreen} from './src/category/CategoryDetail';
+import {OrderScreen} from './src/order/OrdersScreen';
 
 const Stack = createNativeStackNavigator();
-
-function OrderScreen({
-  navigation,
-}: NativeStackScreenProps<ParamListBase, 'Orders'>) {
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text variant="displayLarge">Cross Platform Project</Text>
-    </View>
-  );
-}
 
 function CategoryStack() {
   return (
@@ -87,7 +78,7 @@ function App() {
           })}>
           <Tab.Screen name="Products" component={ProductStack} />
           <Tab.Screen name="Categories" component={CategoryStack} />
-          <Tab.Screen name="Orders" component={OrderScreen} />
+          <Tab.Screen name="OrderList" component={OrderScreen} />
         </Tab.Navigator>
       </NavigationContainer>
     </PaperProvider>
