@@ -2,12 +2,19 @@
 // In App.js in a new project
 
 import * as React from 'react';
-import {View, Button} from 'react-native';
+import {View, Button, ScrollView} from 'react-native';
 import {NavigationContainer, ParamListBase} from '@react-navigation/native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {
+  NativeStackScreenProps,
+  createNativeStackNavigator,
+} from '@react-navigation/native-stack';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
-import {PaperProvider, Text} from 'react-native-paper';
+import {DataTable, PaperProvider, Text} from 'react-native-paper';
 import AntIcons from 'react-native-vector-icons/AntDesign';
+import {ProductScreen} from './src/product/ProductsScreen';
+import {ProductDetailScreen} from './src/product/ProductDetails';
+
+const Stack = createNativeStackNavigator();
 
 function OrderScreen({
   navigation,
@@ -19,15 +26,12 @@ function OrderScreen({
   );
 }
 
-function ProductScreen({
-  navigation,
-}: NativeStackScreenProps<ParamListBase, 'Products'>) {
+function ProductStack() {
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Product Screen</Text>
-
-      <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
-    </View>
+    <Stack.Navigator>
+      <Stack.Screen name="ProductsList" component={ProductScreen} />
+      <Stack.Screen name="ProductDetail" component={ProductDetailScreen} />
+    </Stack.Navigator>
   );
 }
 
@@ -72,7 +76,7 @@ function App() {
               return <AntIcons name={iconName} size={24} color={color} />;
             },
           })}>
-          <Tab.Screen name="Products" component={ProductScreen} />
+          <Tab.Screen name="Products" component={ProductStack} />
           <Tab.Screen name="Categories" component={CategoryScreen} />
           <Tab.Screen name="Orders" component={OrderScreen} />
         </Tab.Navigator>
